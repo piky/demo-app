@@ -10,15 +10,15 @@ pipeline {
     }
             
     stages {
-        stage('SCM Get Code') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/piky/demo-app.git']]])
-            }
-        }
+//        stage('SCM Get Code') {
+//           steps {
+//                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/piky/demo-app.git']]])
+//            }
+//        }
         stage('Unit test') {
             steps {
                 sh 'npm install'
-//                sh 'npm run test'
+                sh 'npm run test:unit'
               }
           }
     }
