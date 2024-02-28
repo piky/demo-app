@@ -3,9 +3,9 @@
 pipeline {
     agent {
         kubernetes {
-            defaultContainer 'python3'
+            defaultContainer 'nodejs'
             yamlFile 'KubernetesPod.yaml'
-            retries 2
+            retries 3
         }
     }
             
