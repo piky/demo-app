@@ -1,0 +1,20 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent {
+        kubernetes {
+            defaultContainer 'nodejs'
+            yamlFile 'KubernetesPod.yaml'
+            retries 2
+        }
+    }
+            
+    stages {
+        stage('Determine NodeJS Version') {
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+
+}
