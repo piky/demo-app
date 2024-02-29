@@ -28,7 +28,17 @@ pipeline {
 //        }
         stage('Build & Push Docker Image') {
             steps {
+              withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')])
+              {
                 sh 'docker build -t $DOCKER_REGISTRY:$BUILD_NUMBER .'
+              }
+              {
+                sh 'docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}'
+                sh 'docker push $DOCKER_REGISTRY:$BUILD_NUMBER'
+              }
+              {
+                sh 'docker rmi $DOCKER_REGISTRY:$BUILD_NUMBER'
+              }
             }
         }
     }
