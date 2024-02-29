@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-      registry = "piky/demo-app"
+      DOCKER_REGISTRY = "piky/demo-app"
       registryCredential = 'dockerhub'
     }
             
@@ -34,7 +34,7 @@ pipeline {
 //        }
         stage('Build & Push Docker Image') {
             steps {
-                sh 'docker build -t $registry:$BUILD_NUMBER .'
+                sh 'docker build -t $DOCKER_REGISTRY:$BUILD_NUMBER .'
             }
         }
     }
