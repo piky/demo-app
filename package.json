@@ -8,7 +8,7 @@
     "start": "node dist/main.js",
     "lint": "tslint --project .",
     "test:ci": "tsc &&MOCHA_FILE=./coverage/junit.xml mocha --reporter mocha-junit-reporter -r ts-node/register test/**/*.test.ts --exit",
-    "test:unit": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\" --maxWorkers=\"50%\" --exit",
+    "test:unit": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\" --maxWorkers=\"50%\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
