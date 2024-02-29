@@ -49,4 +49,5 @@ it("Should POST /mirror 2 type of json", async function () {
   expect(res.body.data).not.to.be.empty;
   expect(res.body.data).to.be.an("string");
   expect(res.body.error).to.be.undefined;
+  done();
 })
