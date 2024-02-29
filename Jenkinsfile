@@ -1,5 +1,4 @@
 #!/usr/bin/env groovy
-
 pipeline {
     agent {
         kubernetes {
@@ -21,6 +20,7 @@ pipeline {
                // sh 'npm run test:unit'
             }
         }
+    }
 //        stage('OWASP dependencies Check') {
 //            steps {
 //              dependencyCheck additionalArguments: ''' 
@@ -34,11 +34,9 @@ pipeline {
 //        }
         stage('Build & Push Docker Image') {
             steps {
-                  script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                script {
+                    docker.build registry + ":$BUILD_NUMBER"
                   }
-               }
-            }
-        }
-    }
+              }
+          }
 }
