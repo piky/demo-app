@@ -9,6 +9,11 @@ describe("Root API path test", function () {
   });
 });
 
+after(function (done) {
+  // Close the connection after all tests are done
+  request(app).close(done);
+});
+
 it("Should POST /mirror 1 type of json(string)", async function () {
   const res = await request(app).post('/mirror').send({"data": "Funny Dummy"});
   
