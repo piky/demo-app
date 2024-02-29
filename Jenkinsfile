@@ -3,8 +3,9 @@ pipeline {
     agent any
 
     environment {
-      DOCKER_REGISTRY = "piky/demo-app"
+      registry = "piky/demo-app"
       registryCredential = 'dockerhub'
+      dockerImage = ''
     }
             
     stages {
@@ -29,7 +30,7 @@ pipeline {
         stage('Build & Push Docker Image') {
             steps {
               script {
-                dockerImage = docker.build "$DOCKER_REGISTRY" + ":$BUILD_NUMBER"  
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"  
               }
             }
         }
