@@ -18,11 +18,13 @@ pipeline {
         }
         stage('OWASP dependencies Check') {
             steps {
-                scripts {
-                  sh "npm audit --json > npm_audit_report.json"
-                  // Check the report and fail the build if vulnerabilities are found
-                  sh "grep -q \'"vulnerabilities":\{"found":0\' npm_audit_report.json || (echo "Vulnerabilities found" && exit 1)"
-                }
+              dependencyCheck additionalArguments: ''' 
+                    -o './'
+                    -s './'
+                    -f 'ALL' 
+                    --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+        
+               dependencyCheckPublisher pattern: 'dependency-check-report.xml' 
             }
         }
     }
