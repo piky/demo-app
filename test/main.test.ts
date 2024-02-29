@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import {agent as request} from 'supertest';
 import server from '../src/main';
 
-describe("Root API path test", () => {
+describe("Root API path test", function () {
   it('should always pass', function () {
     expect(true).to.equal(true);
     done();
