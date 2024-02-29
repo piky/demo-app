@@ -7,14 +7,14 @@ metadata:
 spec:
   containers:
     - name: nodejs
-      image: jenkins/jnlp-agent-node:16.10.0
+      image: jenkins/jnlp-agent-node:latest
       command:
         - cat
       tty: true
       resources:
         requests:
-          memory: "1024Mi"
-          cpu: "2000m"
+          memory: "256Mi"
+          cpu: "100m"
         limits:
-          memory: "1024Mi"
-          cpu: "2000m"
+          memory: "512Mi"
+          cpu: "400m"
