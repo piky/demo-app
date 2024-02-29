@@ -12,21 +12,21 @@ pipeline {
         stage('Unit test') {
             steps {
                 sh 'npm install'
-               // sh 'npm run test:unit'
+                sh 'npm run test:unit'
             }
         }
     
-//        stage('OWASP dependencies Check') {
-//            steps {
-//              dependencyCheck additionalArguments: ''' 
-//                   -o './'
-//                    -s './'
-//                    -f 'ALL' 
-//                    --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-//        
-//               dependencyCheckPublisher pattern: 'dependency-check-report.xml' 
-//            }
-//        }
+        stage('OWASP dependencies Check') {
+            steps {
+              dependencyCheck additionalArguments: ''' 
+                   -o './'
+                    -s './'
+                    -f 'ALL' 
+                    --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+        
+               dependencyCheckPublisher pattern: 'dependency-check-report.xml' 
+            }
+        }
         stage('Build & Push Docker Image') {
             steps {
               script {
