@@ -20,7 +20,7 @@ pipeline {
                // sh 'npm run test:unit'
             }
         }
-    }
+    
 //        stage('OWASP dependencies Check') {
 //            steps {
 //              dependencyCheck additionalArguments: ''' 
@@ -37,6 +37,7 @@ pipeline {
                 script {
                     docker.build registry + ":$BUILD_NUMBER"
                   }
-              }
-          }
+            }
+        }
+    }
 }
