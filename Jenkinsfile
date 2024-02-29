@@ -1,12 +1,6 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent {
-        kubernetes {
-            defaultContainer 'nodejs'
-            yamlFile 'KubernetesPod.yaml'
-            retries 3
-        }
-    }
+    agent any
 
     environment {
       DOCKER_REGISTRY = "piky/demo-app"
