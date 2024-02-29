@@ -5,12 +5,8 @@ import server from '../src/main';
 describe("Root API path test", () => {
   it('should always pass', function () {
     expect(true).to.equal(true);
+    done();
   });
-});
-
-after(function (done) {
-  // Close the connection after all tests are done
-  server.close(done);
 });
 
 it("Should POST /mirror 1 type of json(string)", async function () {
@@ -49,5 +45,4 @@ it("Should POST /mirror 2 type of json", async function () {
   expect(res.body.data).not.to.be.empty;
   expect(res.body.data).to.be.an("string");
   expect(res.body.error).to.be.undefined;
-  done();
 })
