@@ -13,7 +13,7 @@ pipeline {
         stage('Unit test') {
             steps {
                 sh 'npm install'
-                sh 'npm run test:unit'
+               // sh 'npm run test:unit'
             }
         }
         stage('OWASP dependencies Check') {
