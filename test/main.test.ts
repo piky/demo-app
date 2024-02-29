@@ -2,16 +2,11 @@ import {expect} from 'chai';
 import {agent as request} from 'supertest';
 import app from '../src/main';
 
-describe("Root API path test", function () {
+describe("Root API path test", function () => {
   it('should always pass', (done) => {
     expect(true).to.equal(true);
     done();
   });
-});
-
-after(function (done) {
-  // Close the connection after all tests are done
-  request(app).close(done);
 });
 
 it("Should POST /mirror 1 type of json(string)", async function () {
