@@ -8,8 +8,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(usersRouter);
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
   return console.log(`⚡️[server]: Server is running at ${PORT}`);
 });
 
-export default server;
+export default app;

@@ -1,16 +1,16 @@
 import {expect} from 'chai';
 import {agent as request} from 'supertest';
-import server from '../src/main';
+import app from '../src/main';
 
-describe("Root API path test", function () {
-  it('should always pass', (done) => {
+describe("Root API path test", () => {
+  it('should always pass', (done) {
     expect(true).to.equal(true);
     done();
   });
 });
 
 it("Should POST /mirror 1 type of json(string)", async function () {
-  const res = await request(server).post('/mirror').send({"data": "Funny Dummy"});
+  const res = await request(app).post('/mirror').send({"data": "Funny Dummy"});
   
   expect(res.status).to.equal(200);
   expect(res.body).not.to.be.empty;
@@ -19,7 +19,7 @@ it("Should POST /mirror 1 type of json(string)", async function () {
   expect(res.body.error).to.be.undefined;
 })
 it("Should POST /mirror 1 type of json(number)", async function () {
-  const res = await request(server).post('/mirror').send({"data": 112});
+  const res = await request(app).post('/mirror').send({"data": 112});
   
   expect(res.status).to.equal(200);
   expect(res.body).not.to.be.empty;
@@ -28,7 +28,7 @@ it("Should POST /mirror 1 type of json(number)", async function () {
   expect(res.body.error).to.be.undefined;
 })
 it("Should POST /mirror 1 type of json(bool)", async function () {
-  const res = await request(server).post('/mirror').send({"data": true});
+  const res = await request(app).post('/mirror').send({"data": true});
   
   expect(res.status).to.equal(200);
   expect(res.body).not.to.be.empty;
@@ -38,7 +38,7 @@ it("Should POST /mirror 1 type of json(bool)", async function () {
 })
 
 it("Should POST /mirror 2 type of json", async function () {
-  const res = await request(server).post('/mirror').send({"data": "Funny Dummy", "count": 2});
+  const res = await request(app).post('/mirror').send({"data": "Funny Dummy", "count": 2});
   
   expect(res.status).to.equal(200);
   expect(res.body).not.to.be.empty;
