@@ -80,7 +80,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'kubectl version'
+                withKubeConfig([namespace: "jenkins"]) {
+                    sh 'kubectl get pods'
+                }
             }
         }
     }
