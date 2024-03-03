@@ -9,6 +9,7 @@ pipeline {
     // }
 
     environment {
+      repository = "https://github.com/piky/ts-example.git"
       registry = "piky/demo-app"
       registryCredential = 'dockerHub'
       dockerImage = ''
