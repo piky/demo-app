@@ -71,5 +71,18 @@ pipeline {
         //         }
         //     }
         // }
+        stage ('Deploy to Kubernetes') {
+            agent {
+                kubernetes {
+                    defaultContainer 'kubectl'
+                    yamlFile 'KubeCtlPod.yaml'
+                    retries 3
+                    reuseNode true
+                }
+            }
+            steps {
+                sh 'kubectl version'
+            }
+        }
     }
 }
