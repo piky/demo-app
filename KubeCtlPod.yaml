@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: agent-kubectl
+  labels:
+      jenkins-agent: jnlp-agent-kubectl
+spec:
+  containers:
+    - name: kubectl
+      image: bitnami/kubectl
+      command:
+        - cat
+      tty: true
+      # resources:
+      #   requests:
+      #     memory: "256Mi"
+      #     cpu: "100m"
+      #   limits:
+      #     memory: "512Mi"
+      #     cpu: "400m"
