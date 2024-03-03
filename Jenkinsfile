@@ -77,7 +77,6 @@ pipeline {
                     defaultContainer 'kubectl'
                     yamlFile 'KubeCtlPod.yaml'
                     retries 3
-                    reuseNode true
                 }
             }
             steps {
