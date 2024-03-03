@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent any // {
+    // agent any // {
     //     kubernetes {
     //         defaultContainer 'nodejs'
     //         yamlFile 'KubernetesPod.yaml'
@@ -80,7 +80,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'kubectl version'
+                script {
+                    sh 'kubectl version'
+                }
             }
         }
     }
