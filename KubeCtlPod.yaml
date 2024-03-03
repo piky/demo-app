@@ -4,6 +4,7 @@ metadata:
   name: agent-kubectl
   labels:
       jenkins-agent: jnlp-agent-kubectl
+      jenkins/label: agent-$JOB_NAME-$BUILD_NUMBER
 spec:
   containers:
     - name: kubectl

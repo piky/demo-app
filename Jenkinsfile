@@ -76,7 +76,6 @@ pipeline {
                 kubernetes {
                     defaultContainer 'kubectl'
                     yamlFile 'KubeCtlPod.yaml'
-                    inheritFrom "agent-$JOB_NAME-$BUILD_NUMBER"
                     retries 3
                 }
             }
