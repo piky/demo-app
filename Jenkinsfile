@@ -80,7 +80,7 @@ pipeline {
                 }
             }
             steps {
-                withKubeConfig([namespace: "jenkins"]) {
+                withKubeConfig([credentialsId: 'kubeconfig']) {
                     sh 'kubectl get pods'
                 }
             }
