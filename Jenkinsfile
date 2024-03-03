@@ -79,6 +79,13 @@ pipeline {
                     retries 3
                 }
             }
+            steps {
+                script {
+                    withKubeConfig ([credentialsId: 'kubeconfig']) {
+                        sh 'kubectl version'
+                    }
+                }
+            }
         }
     }
 }
