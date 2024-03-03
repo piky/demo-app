@@ -18,6 +18,7 @@ pipeline {
         stage('Unit test') {
             steps {
                 sh 'node --version'
+                sh 'npm --version'
                 sh 'npm install'
                 // sh 'npm run test:unit'
             }
