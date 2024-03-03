@@ -51,13 +51,13 @@ pipeline {
                 script {
                     withKubeConfig ([credentialsId: 'kubeconfig'])
                     {
-                        sh 'curl -sLO https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml'
-                        sh 'curl -sLO https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/service.yaml'
-                        sh """sed -i 's|dukecyber/ts-example:dev-v1.0|piky/ts-example:latest|' deployment.yaml"""
-                        sh """sed -i 's|8080|3000|' service.yaml"""
-                        sh 'kubectl apply -f service.yaml'
-                        sh 'kubectl apply -f deployment.yaml'
-                        sh 'kubectl apply -f https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/ingress.yaml'
+                        // sh 'curl -sLO https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml'
+                        // sh 'curl -sLO https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/service.yaml'
+                        // sh """sed -i 's|dukecyber/ts-example:dev-v1.0|piky/ts-example:latest|' deployment.yaml"""
+                        // sh """sed -i 's|8080|3000|' service.yaml"""
+                        // sh 'kubectl apply -f service.yaml'
+                        // sh 'kubectl apply -f deployment.yaml'
+                        sh 'kubectl apply -f https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml'
                         sleep(30)
                         sh 'kubectl get svc'
                         sh 'kubectl get pods'
