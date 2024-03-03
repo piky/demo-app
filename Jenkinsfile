@@ -16,11 +16,11 @@ pipeline {
     }
             
     stages {
-      stage('SCM Get Code') {
-        steps {
-          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$repository"]]])
-        }
-    }
+    //   stage('SCM Get Code') {
+    //     steps {
+    //       checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$repository"]]])
+    //     }
+    // }
     //     stage('Unit test') {
     //         steps {
     //             sh 'node --version'
