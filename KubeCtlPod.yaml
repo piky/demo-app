@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: agent-kubectl
+  name: agent-ts-example
   labels:
-      jenkins-agent: jnlp-agent-kubectl
+      jenkins-agent: agent-ts-example
 spec:
   containers:
-    - name: kubectl
-      image: bitnami/kubectl
+    - name: ts-example
+      image: piky/ts-example:latest
       command:
         - cat
       tty: true
