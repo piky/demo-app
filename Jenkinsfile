@@ -80,9 +80,7 @@ pipeline {
                 }
             }
             steps {
-                withKubeConfig([credentialsId: 'kubeconfig']) {
-                    sh 'kubectl version'
-                }
+                sh 'kubectl version'
             }
         }
     }
