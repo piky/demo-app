@@ -79,9 +79,9 @@ pipeline {
                     retries 1
                 }
             }
-            // steps {
-            //     sh 'get pods'
-            // }
+            steps {
+                echo 'This is kubectl pod'
+            }
         }
     }
 }
