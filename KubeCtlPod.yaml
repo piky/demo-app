@@ -8,7 +8,9 @@ spec:
   containers:
     - name: kubectl
       image: bitnami/kubectl
-      # command:
+      command:
+        - sleep
+        - "infinity"
       #   - cat
       # tty: true
       # resources:
