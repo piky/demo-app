@@ -76,7 +76,7 @@ pipeline {
                 kubernetes {
                     defaultContainer 'kubectl'
                     yamlFile 'KubeCtlPod.yaml'
-                    retries 3
+                    retries 1
                 }
             }
             steps {
