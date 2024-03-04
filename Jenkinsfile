@@ -80,7 +80,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'kubectl version'
+                sh 'version'
             }
         }
     }
