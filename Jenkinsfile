@@ -80,7 +80,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'kubectl version'
+                script {
+                    sh 'kubectl get pods'
+                }
             }
         }
     }
