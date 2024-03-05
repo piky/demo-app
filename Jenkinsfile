@@ -1,12 +1,12 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent none // {
-    //     kubernetes {
-    //         defaultContainer 'nodejs'
-    //         yamlFile 'KubernetesPod.yaml'
-    //         retries 3
-    //     }
-    // }
+    agent {
+        kubernetes {
+            defaultContainer 'nodejs'
+            yamlFile 'k8s/agent-nodejs.yaml'
+            retries 1
+        }
+    }
 
     environment {
       repository = "https://github.com/piky/demo-app.git"
@@ -22,13 +22,6 @@ pipeline {
         }
       }
       stage('Unit test') {
-            agent {
-                kubernetes {
-                    defaultContainer 'kubectl'
-                    yamlFile 'k8s/agent-nodejs.yaml'
-                    retries 1
-                }
-            }
             steps {
                 sh 'node --version'
                 sh 'npm --version'
