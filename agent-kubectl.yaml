@@ -8,5 +8,5 @@ spec:
   containers:
     - name: kubectl
       image: yonadev/jnlp-slave-k8s-helm
-      command: ['sleep', '60']
+      command: ['sleep', '300']
       tty: true
