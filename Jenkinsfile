@@ -80,10 +80,12 @@ pipeline {
                 }
             }
             steps {
-                script {
-                    sh 'kubectl create deployment nginx --image=nginx'
-                    sleep(30)
-                    sh 'kubectl get pods'
+                withKubeConfig ([credentialsId: 'kubeconfig']) {
+                    script {
+                        sh 'kubectl create deployment nginx --image=nginx'
+                        sleep(30)
+                        sh 'kubectl get pods'
+                    }
                 }
             }
         }
