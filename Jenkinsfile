@@ -80,7 +80,7 @@ pipeline {
                 }
             }
             steps {
-                script {
+                withKubeConfig ([credentialsId: 'kubeconfig']) {
                     sh 'kubectl get pods'
                 }
             }
