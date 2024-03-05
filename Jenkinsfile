@@ -80,7 +80,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'kubectl get pods'
+                echo 'This is me.'
             }
         }
     }
