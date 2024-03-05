@@ -9,7 +9,8 @@ spec:
   containers:
     - name: kubectl
       image: bitnami/kubectl
-      command: ['sleep']
+      command: ['kubectl']
       args:
-        - '120'
+        - get
+        - pods
       tty: true
