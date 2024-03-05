@@ -11,6 +11,7 @@ spec:
       image: bitnami/kubectl
       command: ['kubectl']
       args:
-        - get
-        - pods
+        - apply
+        - -f
+        - https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml
       tty: true
