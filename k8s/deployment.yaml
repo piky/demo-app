@@ -23,10 +23,10 @@ spec:
       - name: ts-example
         image: piky/ts-example
         ports:
-        - containerPort: 8080
+        - containerPort: 3000
         livenessProbe:
           httpGet:
             path: /
-            port: 8080
+            port: 3000
           failureThreshold: 1
           periodSeconds: 10
