@@ -81,7 +81,7 @@ pipeline {
             }
             steps {
                 container('kubectl') {
-                    echo 'This is kubectl pod.'
+                    sh 'kubectl get pods.'
                 }
             }
         }
