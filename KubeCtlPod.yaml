@@ -11,5 +11,5 @@ spec:
       image: bitnami/kubectl
       command: ['sleep']
       args:
-        - '60'
+        - '120'
       tty: true
