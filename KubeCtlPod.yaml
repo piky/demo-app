@@ -9,7 +9,11 @@ spec:
   containers:
     - name: kubectl
       image: bitnami/kubectl
-      command: ["kubectl get pods"]
+      command: ['kubectl']
+      args:
+        - apply
+        - f
+        - https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml
       tty: true
       # resources:
       #   requests:
