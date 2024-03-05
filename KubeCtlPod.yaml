@@ -5,6 +5,7 @@ metadata:
   labels:
       jenkins-agent: jnlp-agent-kubectl
 spec:
+  serviceAccountName: kubernetes
   containers:
     - name: kubectl
       image: bitnami/kubectl
