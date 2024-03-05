@@ -8,8 +8,8 @@ spec:
   containers:
     - name: kubectl
       image: bitnami/kubectl
-      command: ["kubectl"]
-      args: ["cluster-info"]
+      command: ['kubectl']
+      args: ['get', 'pods']
       tty: true
       # resources:
       #   requests:
