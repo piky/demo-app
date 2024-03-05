@@ -12,7 +12,7 @@ spec:
       command: ['kubectl']
       args:
         - apply
-        - f
+        - -f
         - https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml
       tty: true
       # resources:
