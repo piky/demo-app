@@ -5,14 +5,9 @@ metadata:
   labels:
       jenkins-agent: jnlp-agent-kubectl
 spec:
-  serviceAccountName: internal-kubectl
+  # serviceAccountName: internal-kubectl
   containers:
     - name: kubectl
       image: yonadev/jnlp-slave-k8s-helm
       command: ['sleep', '60']
-        #      command: ['kubectl']
-        #args:
-        #- apply
-        #- -f
-        #- https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml
       tty: true
