@@ -82,7 +82,7 @@ pipeline {
             steps {
                 withKubeConfig ([credentialsId: 'kubeconfig']) {
                     script {
-                        sh 'kubectl create deployment nginx --image=nginx'
+                        sh 'kubectl apply -f https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml'
                         sleep(30)
                         sh 'kubectl get pods'
                     }
