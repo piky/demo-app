@@ -5,7 +5,6 @@ metadata:
   labels:
       jenkins-agent: jnlp-agent-kubectl
 spec:
-  # serviceAccountName: internal-kubectl
   containers:
     - name: kubectl
       image: yonadev/jnlp-slave-k8s-helm
