@@ -80,7 +80,11 @@ pipeline {
                 }
             }
             steps {
-                sh 'kubectl get pods'
+                script {
+                    sh 'kubectl create deployment nginx --image=nginx'
+                    sleep(30)
+                    sh 'kubectl get pods'
+                }
             }
         }
     }
