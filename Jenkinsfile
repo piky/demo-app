@@ -75,7 +75,7 @@ pipeline {
             agent {
                 kubernetes {
                     defaultContainer 'kubectl'
-                    yamlFile 'KubeCtlPod.yaml'
+                    yamlFile 'agent-kubectl.yaml'
                     retries 1
                 }
             }
