@@ -9,7 +9,7 @@ spec:
     - name: kubectl
       image: bitnami/kubectl
       command: ["kubectl"]
-      args: ["version"]
+      args: ["cluster-info"]
       tty: true
       # resources:
       #   requests:
