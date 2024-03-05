@@ -8,8 +8,8 @@ spec:
   containers:
     - name: kubectl
       image: bitnami/kubectl
-      command:
-        - version
+      command: ["kubectl"]
+      args: ["version"]
       tty: true
       # resources:
       #   requests:
