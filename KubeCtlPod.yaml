@@ -10,7 +10,7 @@ spec:
     - name: kubectl
       image: bitnami/kubectl
       command: ['kubectl']
-      args: ['get', 'pods']
+      args: ['get pods']
       tty: true
       # resources:
       #   requests:
