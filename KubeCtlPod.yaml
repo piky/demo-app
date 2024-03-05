@@ -9,11 +9,9 @@ spec:
   containers:
     - name: kubectl
       image: bitnami/kubectl
-      command: ['kubectl']
+      command: ['sleep']
       args:
-        - apply
-        - -f
-        - https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml
+        - '30'
       tty: true
       # resources:
       #   requests:
