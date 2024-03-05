@@ -8,7 +8,7 @@ spec:
   serviceAccountName: internal-kubectl
   containers:
     - name: kubectl
-      image: bitnami/kubectl
+      image: yonadev/jnlp-slave-k8s-helm
       command: ['sleep', '60']
         #      command: ['kubectl']
         #args:
