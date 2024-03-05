@@ -82,13 +82,9 @@ pipeline {
             steps {
                 withKubeConfig ([credentialsId: 'kubeconfig']) {
                     script {
-                        sh 'curl -sLO https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/deployment.yaml'
-                        sh 'curl -sLO https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/service.yaml'
-                        sh """sed -i 's|dukecyber/ts-example:dev-v1.0|$registry:latest|' deployment.yaml"""
-                        sh """sed -i 's|8080|3000|' service.yaml"""
-                        sh 'kubectl apply -f service.yaml'
-                        sh 'kubectl apply -f deployment.yaml'
-                        sh 'kubectl apply -f https://raw.githubusercontent.com/StartloJ/ts-example/main/k8s/ingress.yaml'
+                        sh 'kubectl apply -f k8s/service.yaml'
+                        sh 'kubectl apply -f k8s/deployment.yaml'
+                        sh 'kubectl apply -f k8s/ingress.yaml'
                         sleep(30)
                         sh 'kubectl get svc'
                         sh 'kubectl get pods'
