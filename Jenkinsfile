@@ -42,6 +42,13 @@ pipeline {
         //     }
         // }
         stage('Build & Push Docker Image') {
+            agent {
+                kubernetes {
+                    defaultContainer 'docker'
+                    yamlFile 'k8s/agent-docker.yaml'
+                    retries 1
+                }
+            }
             steps {
               script {
                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
