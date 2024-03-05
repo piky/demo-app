@@ -9,8 +9,7 @@ spec:
   containers:
     - name: kubectl
       image: bitnami/kubectl
-      command: ['kubectl']
-      args: ["get pods"]
+      command: ['kubectl get pods']
       tty: true
       # resources:
       #   requests:
