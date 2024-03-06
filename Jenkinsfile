@@ -1,12 +1,12 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent none // {
-    //     kubernetes {
-    //         defaultContainer 'nodejs'
-    //         yamlFile 'k8s/agent-nodejs.yaml'
-    //         retries 1
-    //     }
-    // }
+    agent  {
+        kubernetes {
+            defaultContainer 'nodejs'
+            yamlFile 'k8s/agent-nodejs.yaml'
+            retries 1
+        }
+    }
 
     environment {
       repository = "https://github.com/piky/demo-app.git"
@@ -16,19 +16,19 @@ pipeline {
     }
             
     stages {
-    //   stage('SCM Get Code') {
-    //     steps {
-    //       checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$repository"]]])
-    //     }
-    //   }
-    //   stage('Unit test') {
-    //         steps {
-    //             sh 'node --version'
-    //             sh 'npm --version'
-    //             sh 'npm install'
-    //             // sh 'npm run test:unit'
-    //         }
-    //   }
+      stage('SCM Get Code') {
+        steps {
+          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$repository"]]])
+        }
+      }
+      stage('Unit test') {
+            steps {
+                sh 'node --version'
+                sh 'npm --version'
+                // sh 'npm install'
+                // sh 'npm run test:unit'
+            }
+      }
     
         // stage('OWASP dependencies Check') {
         //     steps {
@@ -42,24 +42,24 @@ pipeline {
         //     }
         // }
 
-        stage('Build & Push Docker Image') {
-            agent {
-                kubernetes {
-                    defaultContainer 'docker'
-                    yamlFile 'k8s/agent-docker.yaml'
-                    retries 1
-                }
-            }
-            steps {
-              script {
-                dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                // docker.withRegistry( '', registryCredential ) {
-                //   dockerImage.push()
-                // }
-                // sh "docker rmi $registry:$BUILD_NUMBER"
-              }
-            }
-        }
+        // stage('Build & Push Docker Image') {
+        //     agent {
+        //         kubernetes {
+        //             defaultContainer 'docker'
+        //             yamlFile 'k8s/agent-docker.yaml'
+        //             retries 1
+        //         }
+        //     }
+        //     steps {
+        //       script {
+        //         dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        //         // docker.withRegistry( '', registryCredential ) {
+        //         //   dockerImage.push()
+        //         // }
+        //         // sh "docker rmi $registry:$BUILD_NUMBER"
+        //       }
+        //     }
+        // }
 
         // stage ('Deploy to Kubernetes') {
         //     agent {
