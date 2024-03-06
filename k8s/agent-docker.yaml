@@ -7,19 +7,7 @@ metadata:
 spec:
   containers:
     - name: docker
-      image: jenkins/jnlp-agent-docker:latest
+      image: korekontrol/jnlp-slave-docker:latest
       command:
         - cat
       tty: true
-      volumeMounts:
-      - mountPath: "/var/run/docker.sock"
-        name: "docker-socket-volume"
-      securityContext:
-        privileged: true
-        runAsUser: 0
-      # restartPolicy: "Never"
-  volumes:
-  - name: "docker-socket-volume"
-    hostPath:
-      path: "/var/run/docker.sock"
-      type: "File"
