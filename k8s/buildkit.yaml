@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: buildkitd
-      image: moby/buildkit:master-rootless
+      image: piky/buildkit:master-rootless
       args:
         - --oci-worker-no-process-sandbox
       readinessProbe:
