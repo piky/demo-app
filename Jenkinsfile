@@ -46,7 +46,7 @@ pipeline {
             agent {
                 kubernetes {
                     defaultContainer 'buildkitd'
-                    yamlFile 'k8s/agent-docker.yaml'
+                    yamlFile 'k8s/pod.rootless.yaml'
                     retries 1
                 }
             }
