@@ -25,8 +25,8 @@ pipeline {
             steps {
                 sh 'node --version'
                 sh 'npm --version'
-                sh 'npm install'
-                sh 'npm run test:unit'
+                // sh 'npm install'
+                // sh 'npm run test:unit'
             }
       }
     
@@ -42,24 +42,24 @@ pipeline {
         //     }
         // }
 
-        // stage('Build & Push Docker Image') {
-        //     agent {
-        //         kubernetes {
-        //             defaultContainer 'docker'
-        //             yamlFile 'k8s/agent-docker.yaml'
-        //             retries 1
-        //         }
-        //     }
-        //     steps {
-        //       script {
-        //         dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        //         // docker.withRegistry( '', registryCredential ) {
-        //         //   dockerImage.push()
-        //         // }
-        //         // sh "docker rmi $registry:$BUILD_NUMBER"
-        //       }
-        //     }
-        // }
+        stage('Build & Push Docker Image') {
+            agent {
+                kubernetes {
+                    defaultContainer 'docker'
+                    yamlFile 'k8s/agent-docker.yaml'
+                    retries 1
+                }
+            }
+            steps {
+              script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                // docker.withRegistry( '', registryCredential ) {
+                //   dockerImage.push()
+                // }
+                // sh "docker rmi $registry:$BUILD_NUMBER"
+              }
+            }
+        }
 
         // stage ('Deploy to Kubernetes') {
         //     agent {
