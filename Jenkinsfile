@@ -45,8 +45,8 @@ pipeline {
         stage('Build & Push Docker Image') {
             agent {
                 kubernetes {
-                    defaultContainer 'buildkitd'
-                    yamlFile 'k8s/buildkit.yaml'
+                    defaultContainer 'docker'
+                    yamlFile 'k8s/agent-docker.yaml'
                     retries 1
                 }
             }

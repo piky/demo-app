@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: docker
-      image: docker:dind
+      image: jenkins/jnlp-agent-docker
       command:
         - cat
       tty: true
