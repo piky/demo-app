@@ -2,7 +2,7 @@
 pipeline {
     agent  {
         kubernetes {
-            defaultContainer 'nodejs'
+            defaultContainer 'buildkitd'
             yamlFile 'k8s/agent-nodejs.yaml'
             retries 1
         }
@@ -21,14 +21,14 @@ pipeline {
           checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$repository"]]])
         }
       }
-      stage('Unit test') {
-            steps {
-                sh 'node --version'
-                sh 'npm --version'
-                // sh 'npm install'
-                // sh 'npm run test:unit'
-            }
-      }
+      // stage('Unit test') {
+      //       steps {
+      //           sh 'node --version'
+      //           sh 'npm --version'
+      //           // sh 'npm install'
+      //           // sh 'npm run test:unit'
+      //       }
+      // }
     
         // stage('OWASP dependencies Check') {
         //     steps {
@@ -52,8 +52,9 @@ pipeline {
             // }
             steps {
               script {
-                sleep(300)
-                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                buildctl debug info
+                docker info
+                // dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 // docker.withRegistry( '', registryCredential ) {
                 //   dockerImage.push()
                 // }
