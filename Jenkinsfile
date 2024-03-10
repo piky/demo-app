@@ -3,7 +3,7 @@ pipeline {
     agent  {
         kubernetes {
             defaultContainer 'buildkitd'
-            yamlFile 'k8s/agent-nodejs.yaml'
+            yamlFile 'k8s/agent-buildkit.yaml'
             retries 1
         }
     }
