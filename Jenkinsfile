@@ -43,13 +43,13 @@ pipeline {
         // }
 
         stage('Build & Push Docker Image') {
-            agent {
-                kubernetes {
-                    defaultContainer 'docker'
-                    yamlFile 'k8s/agent-docker.yaml'
-                    retries 1
-                }
-            }
+            // agent {
+            //     kubernetes {
+            //         defaultContainer 'docker'
+            //         yamlFile 'k8s/agent-docker.yaml'
+            //         retries 1
+            //     }
+            // }
             steps {
               script {
                 sleep(300)
