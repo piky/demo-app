@@ -52,6 +52,7 @@ pipeline {
             }
             steps {
               script {
+                sleep(300)
                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 // docker.withRegistry( '', registryCredential ) {
                 //   dockerImage.push()

@@ -8,6 +8,6 @@ spec:
   containers:
     - name: docker
       image: jenkins/jnlp-agent-docker
-      command: ['sleep', '300']
-        # - cat
+      command: 
+        - cat
       tty: true
