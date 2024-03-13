@@ -53,9 +53,9 @@ pipeline {
             steps {
               script {
                 // sleep(300)
-                sh 'buildctl debug info'
-                sh 'docker info'
-                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                // sh 'buildctl debug info'
+                sh 'docker buildx ls'
+                // dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 // docker.withRegistry( '', registryCredential ) {
                 //   dockerImage.push()
                 // }
