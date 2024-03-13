@@ -56,9 +56,9 @@ pipeline {
                 // sh 'docker buildx ls'
                 // sleep(300)
                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                docker.withRegistry( '', registryCredential ) {
-                  dockerImage.push()
-                }
+                // docker.withRegistry( '', registryCredential ) {
+                //   dockerImage.push()
+                // }
                 // sh "docker rmi $registry:$BUILD_NUMBER"
               }
             }
