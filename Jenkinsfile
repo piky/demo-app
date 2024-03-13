@@ -21,14 +21,14 @@ pipeline {
           checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$repository"]]])
         }
       }
-      // stage('Unit test') {
-      //       steps {
-      //           sh 'node --version'
-      //           sh 'npm --version'
-      //           // sh 'npm install'
-      //           // sh 'npm run test:unit'
-      //       }
-      // }
+      stage('Unit test') {
+            steps {
+                sh 'node --version'
+                sh 'npm --version'
+                // sh 'npm install'
+                // sh 'npm run test:unit'
+            }
+      }
     
         // stage('OWASP dependencies Check') {
         //     steps {
