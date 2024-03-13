@@ -52,7 +52,7 @@ pipeline {
             // }
             steps {
               script {
-                sleep(300)
+                // sleep(300)
                 buildctl debug info
                 docker info
                 // dockerImage = docker.build registry + ":$BUILD_NUMBER"
