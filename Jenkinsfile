@@ -63,7 +63,7 @@ pipeline {
              steps {
                  withKubeConfig ([credentialsId: 'kubeconfig']) {
                      script {
-                         sh 'kubectl apply -f k8s/service.yaml k8s/deployment.yaml k8s/ingress.yaml'
+                         sh 'kubectl apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml'
                          sleep(30)
                          sh 'kubectl get svc'
                          sh 'kubectl get pods'
