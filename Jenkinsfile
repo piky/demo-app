@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
+
 pipeline {
+
     environment {
       repository = "https://github.com/piky/demo-app.git"
       registry = "piky/demo-app"
@@ -45,11 +47,12 @@ pipeline {
         stage('Build & Push Docker Image') {
             steps {
               script {
-                docker.withRegistry( '', registryCredential ) {
-                    sh 'docker buildx ls'
-                    // sh "docker buildx build -t $registry:$BUILD_NUMBER --push ."
-                }
-              }
+                sh 'docker buildx ls'
+              //   docker.withRegistry( '', registryCredential ) {
+              //       sh 'docker buildx ls'
+              //       // sh "docker buildx build -t $registry:$BUILD_NUMBER --push ."
+              //   }
+              // }
             }
         }
 
