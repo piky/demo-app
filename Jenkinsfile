@@ -1,5 +1,12 @@
 #!/usr/bin/env groovy
 pipeline {
+    environment {
+      repository = "https://github.com/piky/demo-app.git"
+      registry = "piky/demo-app"
+      registryCredential = 'dockerHub'
+      // dockerImage = ''
+    }
+    
     agent  {
         kubernetes {
             defaultContainer 'buildkitd'
@@ -7,14 +14,7 @@ pipeline {
             retries 1
         }
     }
-
-    environment {
-      repository = "https://github.com/piky/demo-app.git"
-      registry = "piky/demo-app"
-      registryCredential = 'dockerHub'
-      dockerImage = ''
-    }
-            
+   
     stages {
       stage('SCM Get Code') {
         steps {
@@ -47,8 +47,7 @@ pipeline {
               script {
                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 docker.withRegistry( '', registryCredential ) {
-                  dockerImage.push("$BUILD_NUMBER")
-                  dockerImage.push('latest')
+                    sh "docker buildx build -t $registry:$BUILD_NUMBER --push ."
                 }
               }
             }
