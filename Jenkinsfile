@@ -3,8 +3,8 @@
 pipeline {
 
     environment {
-      repository = "https://github.com/piky/demo-app.git"
-      registry = "piky/demo-app"
+      REPOSITORY = "https://github.com/piky/demo-app.git"
+      REGISTRY = "piky/demo-app"
       DOCKERHUB_CREDENTIALS= credentials('dockerHub')
     }
     
@@ -19,7 +19,7 @@ pipeline {
     stages {
       stage('SCM Get Code') {
         steps {
-          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$repository"]]])
+          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$REPOSITORY"]]])
         }
       }
       stage('Unit test') {
@@ -46,14 +46,8 @@ pipeline {
         stage('Build & Push Docker Image') {
             steps {
               script {
-                sh 'docker buildx ls'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                echo 'Login Successfully'
-                sh "docker buildx build --push --tag $registry:$BUILD_NUMBER --build-context project=$repository ."
-                // docker.withRegistry( '', registryCredential ) {
-                //     sh 'docker buildx ls'
-                //     sh "docker buildx build -t $registry:$BUILD_NUMBER --push ."
-                // }
+                sh "docker buildx build --push --tag $REGISTRY:$BUILD_NUMBER --build-context project=$REPOSITORY ."
               }
             }
         }
@@ -77,5 +71,10 @@ pipeline {
         //         }
         //     }
         // }
+    } //stages
+    post {
+      always {  
+        sh 'docker logout'           
+      }
     }
-}
+} // pipeline
