@@ -4,7 +4,7 @@ pipeline {
       repository = "https://github.com/piky/demo-app.git"
       registry = "piky/demo-app"
       registryCredential = 'dockerHub'
-      // dockerImage = ''
+      dockerImage = ''
     }
     
     agent  {
@@ -45,9 +45,9 @@ pipeline {
         stage('Build & Push Docker Image') {
             steps {
               script {
-                // dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 docker.withRegistry( '', registryCredential ) {
-                    sh "docker buildx build -t $registry:$BUILD_NUMBER --push ."
+                    sh 'docker buildx ls'
+                    // sh "docker buildx build -t $registry:$BUILD_NUMBER --push ."
                 }
               }
             }
