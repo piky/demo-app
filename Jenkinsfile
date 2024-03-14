@@ -52,7 +52,7 @@ pipeline {
             }
         }
 
-        // stage ('Deploy to Kubernetes') {
+        stage ('Deploy to Kubernetes') {
         //     agent {
         //         kubernetes {
         //             defaultContainer 'kubectl'
@@ -60,17 +60,17 @@ pipeline {
         //             retries 1
         //         }
         //     }
-        //     steps {
-        //         withKubeConfig ([credentialsId: 'kubeconfig']) {
-        //             script {
-        //                 sh 'kubectl apply -f k8s/'
-        //                 sleep(30)
-        //                 sh 'kubectl get svc'
-        //                 sh 'kubectl get pods'
-        //             }
-        //         }
-        //     }
-        // }
+             steps {
+                 withKubeConfig ([credentialsId: 'kubeconfig']) {
+                     script {
+                         sh 'kubectl apply -f k8s/service.yaml k8s/deployment.yaml k8s/ingress.yaml
+                         sleep(30)
+                         sh 'kubectl get svc'
+                         sh 'kubectl get pods'
+                     }
+                 }
+             }
+         }
     } //stages
     post {
       always {  
