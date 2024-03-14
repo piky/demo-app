@@ -48,7 +48,7 @@ pipeline {
             steps {
               script {
                 sh 'docker buildx ls'
-                sh "docker buildx build --tag $registry:$BUILD_NUMBER --build-context project=$repository ."
+                sh "docker buildx build --push --tag $registry:$BUILD_NUMBER --build-context project=$repository ."
                 // docker.withRegistry( '', registryCredential ) {
                 //     sh 'docker buildx ls'
                 //     sh "docker buildx build -t $registry:$BUILD_NUMBER --push ."
