@@ -47,7 +47,7 @@ pipeline {
             steps {
               script {
                 sh 'docker buildx ls'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 echo 'Login Successfully'
                 sh "docker buildx build --push --tag $registry:$BUILD_NUMBER --build-context project=$repository ."
                 // docker.withRegistry( '', registryCredential ) {
