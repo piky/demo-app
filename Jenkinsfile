@@ -52,7 +52,7 @@ pipeline {
               //       sh 'docker buildx ls'
               //       // sh "docker buildx build -t $registry:$BUILD_NUMBER --push ."
               //   }
-              // }
+              }
             }
         }
 
