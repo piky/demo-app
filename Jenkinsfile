@@ -47,7 +47,7 @@ pipeline {
             steps {
               script {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh "docker buildx build --push --tag $REGISTRY:$BUILD_NUMBER --build-context project=$REPOSITORY ."
+                sh "docker buildx build --build-context project=$REPOSITORY --tag $REGISTRY:$BUILD_NUMBER --push ."
               }
             }
         }
