@@ -6,6 +6,8 @@ pipeline {
       REPOSITORY = "https://github.com/piky/demo-app.git"
       REGISTRY = "piky/demo-app"
       DOCKERHUB_CREDENTIALS= credentials('dockerHub')
+      BUILDER = 'buildkitd'
+      NS = 'default'
     }
     
     agent  {
@@ -45,28 +47,27 @@ pipeline {
 
         stage('Build & Push Docker Image') {
             steps {
-              script {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh "docker buildx build --build-context project=$REPOSITORY --tag $REGISTRY:$BUILD_NUMBER --push ."
+              withKubeConfig ([credentialsId: 'kubeconfig']) {
+                script {
+                  sh "docker buildx create --bootstrap --name=$BUILDER --driver=kubernetes"
+                  sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                  sh "docker buildx build --builder $BUILDER --build-context project=$REPOSITORY --tag $REGISTRY:build-$BUILD_NUMBER --push ."
+                  sh "docker buildx stop $BUILDER"
+                  sh "docker buildx rm $BUILDER"
+                }
               }
             }
         }
 
         stage ('Deploy to Kubernetes') {
-        //     agent {
-        //         kubernetes {
-        //             defaultContainer 'kubectl'
-        //             yamlFile 'k8s/agent-kubectl.yaml'
-        //             retries 1
-        //         }
-        //     }
              steps {
                  withKubeConfig ([credentialsId: 'kubeconfig']) {
                      script {
-                         sh 'kubectl apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml'
+                         sh "kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml"
+                         sh "kubectl --namespace $NS set image deployment/demo-webapp demo-app=piky/demo-app:build-$BUILD_NUMBER"
                          sleep(30)
-                         sh 'kubectl get svc'
-                         sh 'kubectl get pods'
+                         sh "kubectl --namespace $NS get svc"
+                         sh "kubectl --namespace $NS get pods"
                      }
                  }
              }
@@ -74,7 +75,7 @@ pipeline {
     } //stages
     post {
       always {  
-        sh 'docker logout'           
+        sh 'docker logout'
       }
     }
 } // pipeline
