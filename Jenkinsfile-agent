@@ -53,7 +53,9 @@ pipeline {
                   sleep(30)
                   sh "docker buildx use $BUILDER"
                   sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                  sh "docker buildx build --build-context project=$REPOSITORY --tag $REGISTRY:$BUILD_NUMBER --push ."
+                  sh "docker buildx build --builder $BUILDER --build-context project=$REPOSITORY --tag $REGISTRY:$BUILD_NUMBER --push ."
+                  sh "docker buildx stop $BUILDER"
+                  sh "docker buildx rm $BUILDER"
                 }
               }
             }
@@ -75,10 +77,6 @@ pipeline {
     post {
       always {  
         sh 'docker logout'
-        withKubeConfig ([credentialsId: 'kubeconfig']) {
-            sh "docker buildx stop $BUILDER"
-            sh "docker buildx rm $BUILDER"
-        }
       }
     }
 } // pipeline
