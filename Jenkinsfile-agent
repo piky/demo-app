@@ -65,8 +65,8 @@ pipeline {
                      script {
                          sh "kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml"
                          sleep(30)
-                         sh 'kubectl get svc'
-                         sh 'kubectl get pods'
+                         sh "kubectl --namespace $NS get svc"
+                         sh "kubectl --namespace $NS get pods"
                      }
                  }
              }
@@ -75,8 +75,10 @@ pipeline {
     post {
       always {  
         sh 'docker logout'
-        sh "docker buildx stop $BUILDER"
-        sh "docker buildx rm $BUILDER"
+        withKubeConfig ([credentialsId: 'kubeconfig']) {
+            sh "docker buildx stop $BUILDER"
+            sh "docker buildx rm $BUILDER"
+        }
       }
     }
 } // pipeline
