@@ -51,7 +51,7 @@ pipeline {
                 script {
                   sh "docker buildx create --bootstrap --name=$BUILDER --driver=kubernetes"
                   sleep(30)
-                  sh "docker buildx use $BUILDER"
+                  // sh "docker buildx use $BUILDER"
                   sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                   sh "docker buildx build --builder $BUILDER --build-context project=$REPOSITORY --tag $REGISTRY:$BUILD_NUMBER --push ."
                   sh "docker buildx stop $BUILDER"
@@ -67,6 +67,7 @@ pipeline {
                      script {
                          sh "kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml"
                          sleep(30)
+                         sh "kubectl set image deployment/demo-webapp demo-app=piky/demo-app:$BUILD_NUMBER"
                          sh "kubectl --namespace $NS get svc"
                          sh "kubectl --namespace $NS get pods"
                      }

@@ -20,8 +20,8 @@ spec:
         tier: api
     spec:
       containers:
-      - name: ts-example
-        image: piky/ts-example
+      - name: demo-app
+        image: piky/demo-app
         ports:
         - containerPort: 3000
         livenessProbe:
