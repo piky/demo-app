@@ -76,9 +76,8 @@ pipeline {
     post {
       always {  
         sh('docker logout')
-        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-          sh('ls -ahl ~')
-          sh('echo $KUBECONFIG')
+        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]) {
+          sh('export KUBECONFIG=$KUBECONFIG_FILE')
           // sh('$KUBECONFIG docker buildx rm $BUILDER')
         }
       }
