@@ -48,7 +48,7 @@ pipeline {
         // }
 
         stage('Build & Push Docker Image') {
-          withKubeConfig ([credentialsId: 'kubeconfig']) {
+          withKubeConfig ([credentialsId: 'kubeconfig'])
             steps {
                 script {
                   sh('docker buildx create --name=$BUILDER --driver=kubernetes --bootstrap')
@@ -58,7 +58,6 @@ pipeline {
                   sh('docker buildx rm $BUILDER')
                 }
             }
-          }
         }
 
         stage ('Deploy to Kubernetes') {
