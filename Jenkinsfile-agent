@@ -5,10 +5,6 @@ pipeline {
 
   agent none
 
-  environment {
-    JENKINS_AGENT_NAME = "jenkins-agent-${env.JOB_NAME}-${env.BUILD_NUMBER}"
-  }
-
   stages {
     stage ('Provision agent pod') {
       agent {
