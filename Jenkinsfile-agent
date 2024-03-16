@@ -61,14 +61,15 @@ pipeline {
                 }
           }
         }
-      }
+      } // inner stages
+
       post {
         always {
           sh('docker buildx rm $BUILDER')
           sh('docker logout')
         }
       }
-    }
-  } // stages
+    } // stage
+  } // outer stages
 
 } // pipeline
