@@ -75,8 +75,10 @@ pipeline {
     post {
       always {  
         sh('docker logout')
-        sh('docker buildx stop $BUILDER')
-        sh('docker buildx rm $BUILDER')
+        withKubeConfig ([credentialsId: 'kubeconfig']) {
+          sh('docker buildx stop $BUILDER')
+          sh('docker buildx rm $BUILDER')
+        }
       }
     }
 } // pipeline
