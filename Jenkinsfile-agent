@@ -19,6 +19,7 @@ pipeline {
         REPOSITORY = 'https://github.com/piky/demo-app.git'
         REGISTRY = 'piky/demo-app'
         DOCKERHUB_CREDENTIALS = credentials('dockerHub')
+        KUBECONFIG = credentials('kubeconfig')
         BUILDER = 'buildkitd'
         DEPLOYMENT = 'demo-webapp'
         NS = 'default'
