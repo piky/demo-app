@@ -2,6 +2,8 @@
 
 // Here are sequential stages
 pipeline {
+  
+  agent none
 
   environment {
     REPOSITORY = 'https://github.com/piky/demo-app.git'
@@ -12,8 +14,6 @@ pipeline {
     DEPLOYMENT = 'demo-webapp'
     NS = 'default'
   }
-    
-  agent none
 
   stages {
     stage ('Provision agent pod') {
