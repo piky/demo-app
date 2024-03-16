@@ -64,7 +64,6 @@ pipeline {
              steps {
                  withKubeConfig ([credentialsId: 'kubeconfig']) {
                      script {
-                         env()
                          sh('kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml')
                          sh('kubectl --namespace $NS set image deployment/$DEPLOYMENT $JOB_NAME=$REGISTRY:build-$BUILD_NUMBER')
                          sleep(30)
