@@ -6,6 +6,7 @@ pipeline {
       REPOSITORY = 'https://github.com/piky/demo-app.git'
       REGISTRY = 'piky/demo-app'
       DOCKERHUB_CREDENTIALS = credentials('dockerHub')
+      KUBECONFIG = credentials('kubeconfig')
       BUILDER = 'buildkitd'
       DEPLOYMENT = 'demo-webapp'
       NS = 'default'
@@ -53,6 +54,7 @@ pipeline {
                   sh('docker buildx create --name=$BUILDER --driver=kubernetes --bootstrap')
                   sh('echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin')
                   sh('docker buildx build --builder $BUILDER --build-context project=$REPOSITORY --tag $REGISTRY:build-$BUILD_NUMBER --push . ')
+                  sh('docker buildx stop $BUILDER')
                 }
               }
             }
@@ -75,10 +77,7 @@ pipeline {
     post {
       always {  
         sh('docker logout')
-        withKubeConfig ([credentialsId: 'kubeconfig']) {
-          sh('docker buildx stop $BUILDER')
-          sh('docker buildx rm $BUILDER')
-        }
+        sh('export $KUBECONFIG ; docker buildx rm $BUILDER')
       }
     }
 } // pipeline
