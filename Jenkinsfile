@@ -77,8 +77,7 @@ pipeline {
       always {  
         sh('docker logout')
         withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-          // sh('docker buildx rm $BUILDER')
-          echo(KUBECONFIG)
+          sh('docker buildx rm $BUILDER')
         }
       }
     }
