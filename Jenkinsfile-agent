@@ -11,7 +11,7 @@ pipeline {
         kubernetes {
           defaultContainer 'buildkitd'
           yamlFile 'k8s/agent-buildkit.yaml'
-          inheritFrom 'agent-demo-app'
+          label 'agent-$JOB_NAME-$BUILD_NUMBER'
           retries 1
         }
       }
