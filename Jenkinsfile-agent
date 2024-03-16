@@ -6,7 +6,7 @@ pipeline {
   agent none
 
   environment {
-    JENKINS_AGENT_NAME = "jenkins-agent-$JOB_NAME-$BUILD_NUMBER"
+    JENKINS_AGENT_NAME = "jenkins-agent-${env.JOB_NAME}-${env.BUILD_NUMBER}"
   }
 
   stages {
@@ -24,7 +24,7 @@ pipeline {
         REGISTRY = 'piky/demo-app'
         DOCKERHUB_CREDENTIALS = credentials('dockerHub')
         KUBECONFIG = credentials('kubeconfig')
-        BUILDER = "buildkitd${env.BUILD_NUMBER}-"
+        BUILDER = "buildkitd-${env.BUILD_NUMBER}-"
         DEPLOYMENT = 'demo-webapp'
         NS = 'default'
       }
