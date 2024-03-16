@@ -77,7 +77,7 @@ pipeline {
     post {
       always {  
         sh('docker logout')
-        sh('export $KUBECONFIG ; docker buildx rm $BUILDER')
+        sh('export ${KUBECONFIG} ; docker buildx rm $BUILDER')
       }
     }
 } // pipeline
