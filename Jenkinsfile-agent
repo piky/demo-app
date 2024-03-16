@@ -9,9 +9,9 @@ pipeline {
     stage ('Provision agent pod') {
       agent {
         kubernetes {
+          inheritFrom "jenkins-agent-$JOB_NAME-$BUILD_NUMBER"
           defaultContainer 'buildkitd'
           yamlFile 'k8s/agent-buildkit.yaml'
-          label 'agent-$JOB_NAME-$BUILD_NUMBER'
           retries 1
         }
       }
