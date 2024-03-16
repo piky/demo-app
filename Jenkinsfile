@@ -6,6 +6,7 @@ pipeline {
       REPOSITORY = 'https://github.com/piky/demo-app.git'
       REGISTRY = 'piky/demo-app'
       DOCKERHUB_CREDENTIALS = credentials('dockerHub')
+      MY_KUBECONFIG = credentials('kubeconfig')
       BUILDER = 'buildkitd'
       DEPLOYMENT = 'demo-webapp'
       NS = 'default'
@@ -76,10 +77,8 @@ pipeline {
     post {
       always {  
         sh('docker logout')
-        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]) {
-          sh('export KUBECONFIG=$KUBECONFIG_FILE')
-          sh('docker buildx rm $BUILDER')
-        }
+        sh('export KUBECONFIG=$MY_KUBECONFIG')
+        sh('docker buildx rm $BUILDER')
       }
     }
 } // pipeline
