@@ -6,6 +6,7 @@ pipeline {
       REPOSITORY = 'https://github.com/piky/demo-app.git'
       REGISTRY = 'piky/demo-app'
       DOCKERHUB_CREDENTIALS = credentials('dockerHub')
+      MY_KUBECONFIG = credentials('kubeconfig')
       BUILDER = 'buildkitd'
       DEPLOYMENT = 'demo-webapp'
       NS = 'default'
@@ -47,8 +48,8 @@ pipeline {
         // }
 
         stage('Build & Push Docker Image') {
+          withKubeConfig ([credentialsId: 'kubeconfig']) {
             steps {
-              withKubeConfig() {
                 script {
                   sh('docker buildx create --name=$BUILDER --driver=kubernetes --bootstrap')
                   sh('echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin')
@@ -56,13 +57,13 @@ pipeline {
                   sh('docker buildx stop $BUILDER')
                   sh('docker buildx rm $BUILDER')
                 }
-              }
             }
+          }
         }
 
         stage ('Deploy to Kubernetes') {
              steps {
-                 withKubeConfig() {
+                 withKubeConfig ([credentialsId: 'kubeconfig']) {
                      script {
                          sh('kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml')
                          sh('kubectl --namespace $NS set image deployment/$DEPLOYMENT $JOB_NAME=$REGISTRY:build-$BUILD_NUMBER')
