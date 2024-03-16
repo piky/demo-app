@@ -21,7 +21,7 @@ pipeline {
         REGISTRY = 'piky/demo-app'
         DOCKERHUB_CREDENTIALS = credentials('dockerHub')
         KUBECONFIG = credentials('kubeconfig')
-        BUILDER = 'buildkitd'
+        BUILDER = 'buildkitd$BUILD_NUMBER'
         DEPLOYMENT = 'demo-webapp'
         NS = 'default'
       }
