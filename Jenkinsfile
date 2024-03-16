@@ -1,40 +1,44 @@
 #!/usr/bin/env groovy
 
+// Here are sequential stages
 pipeline {
 
-    environment {
-      REPOSITORY = 'https://github.com/piky/demo-app.git'
-      REGISTRY = 'piky/demo-app'
-      DOCKERHUB_CREDENTIALS = credentials('dockerHub')
-      MY_KUBECONFIG = credentials('kubeconfig')
-      BUILDER = 'buildkitd'
-      DEPLOYMENT = 'demo-webapp'
-      NS = 'default'
-    }
-    
-    agent  {
+  agent none
+
+  stages {
+    stage ('Provision agent pod') {
+      agent {
         kubernetes {
-            defaultContainer 'buildkitd'
-            yamlFile 'k8s/agent-buildkit.yaml'
-            retries 1
-        }
-    }
-   
-    stages {
-      stage('SCM Get Code') {
-        steps {
-          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$REPOSITORY"]]])
+          defaultContainer 'buildkitd'
+          yamlFile 'k8s/agent-buildkit.yaml'
+          retries 1
         }
       }
-      stage('Unit test') {
-            steps {
-                sh('node --version')
-                sh('npm --version')
-                // sh 'npm install'
-                // sh 'npm run test:unit'
-            }
+
+      environment {
+        REPOSITORY = 'https://github.com/piky/demo-app.git'
+        REGISTRY = 'piky/demo-app'
+        DOCKERHUB_CREDENTIALS = credentials('dockerHub')
+        KUBECONFIG = credentials('kubeconfig')
+        BUILDER = "buildkitd-${env.BUILD_NUMBER}-"
+        DEPLOYMENT = 'demo-webapp'
+        NS = 'default'
       }
-    
+      
+      stages {
+        stage('SCM Get Code') {
+          steps {
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "$REPOSITORY"]]])
+          }
+        }
+        stage('Unit test') {
+          steps {
+            sh('node --version')
+            sh('npm --version')
+            // sh 'npm install'
+            // sh 'npm run test:unit'
+          }
+        }
         // stage('OWASP dependencies Check') {
         //     steps {
         //       dependencyCheck additionalArguments: ''' 
@@ -46,38 +50,36 @@ pipeline {
         //        dependencyCheckPublisher pattern: 'dependency-check-report.xml' 
         //     }
         // }
-
         stage('Build & Push Docker Image') {
-            steps {
-              withKubeConfig ([credentialsId: 'kubeconfig']) {
-                script {
-                  sh('docker buildx create --name=$BUILDER --driver=kubernetes --bootstrap')
-                  sh('echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin')
-                  sh('docker buildx build --builder $BUILDER --build-context project=$REPOSITORY --tag $REGISTRY:build-$BUILD_NUMBER --push . ')
-                  sh('docker buildx stop $BUILDER')
-                  sh('docker buildx rm $BUILDER')
-                }
+          steps {
+              script {
+                sh('docker buildx create --name=$BUILDER --driver=kubernetes --bootstrap')
+                sh('echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin')
+                sh("docker buildx build --builder $BUILDER --build-context project=$REPOSITORY --tag $REGISTRY:build-${env.BUILD_NUMBER} --push . ")
+                sh('docker buildx stop $BUILDER')
               }
-            }
+          }
         }
-
         stage ('Deploy to Kubernetes') {
-             steps {
-                 withKubeConfig ([credentialsId: 'kubeconfig']) {
-                     script {
-                         sh('kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml')
-                         sh('kubectl --namespace $NS set image deployment/$DEPLOYMENT $JOB_NAME=$REGISTRY:build-$BUILD_NUMBER')
-                        //  sleep(300)
-                         sh('kubectl --namespace $NS get svc')
-                         sh('kubectl --namespace $NS get pods')
-                     }
-                 }
-             }
-         }
-    } //stages
-    post {
-      always {  
-        sh('docker logout')
+          steps {
+                script {
+                    sh('kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml')
+                    sh("kubectl --namespace $NS set image deployment/$DEPLOYMENT ${env.JOB_NAME}=$REGISTRY:build-${env.BUILD_NUMBER}")
+                  //  sleep(30)
+                    sh('kubectl --namespace $NS get svc')
+                    sh('kubectl --namespace $NS get pods')
+                }
+          }
+        }
+      } // inner stages
+
+      post {
+        always {
+          sh('docker buildx rm $BUILDER')
+          sh('docker logout')
+        }
       }
-    }
+    } // stage
+  } // outer stages
+
 } // pipeline
