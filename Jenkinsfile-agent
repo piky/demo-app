@@ -8,7 +8,6 @@ pipeline {
   stages {
     stage ('Provision agent pod') {
       agent {
-        label 'jenkins-agent-$JOB_NAME-$BUILD_NUMBER'
         kubernetes {
           defaultContainer 'buildkitd'
           yamlFile 'k8s/agent-buildkit.yaml'
@@ -17,6 +16,7 @@ pipeline {
       }
 
       environment {
+        JENKINS_AGENT_NAME = 'jenkins-agent-$JOB_NAME-$BUILD_NUMBER'
         REPOSITORY = 'https://github.com/piky/demo-app.git'
         REGISTRY = 'piky/demo-app'
         DOCKERHUB_CREDENTIALS = credentials('dockerHub')
