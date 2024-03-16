@@ -65,7 +65,7 @@ pipeline {
                      script {
                          sh('kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml')
                          sh('kubectl --namespace $NS set image deployment/$DEPLOYMENT $JOB_NAME=$REGISTRY:build-$BUILD_NUMBER')
-                         sleep(30)
+                         sleep(300)
                          sh('kubectl --namespace $NS get svc')
                          sh('kubectl --namespace $NS get pods')
                      }
@@ -77,7 +77,9 @@ pipeline {
       always {  
         sh('docker logout')
         withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-          sh('$KUBECONFIG docker buildx rm $BUILDER')
+          sh('ls -ahl ~')
+          sh('echo $KUBECONFIG')
+          // sh('$KUBECONFIG docker buildx rm $BUILDER')
         }
       }
     }
