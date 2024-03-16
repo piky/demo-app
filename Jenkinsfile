@@ -51,9 +51,9 @@ pipeline {
             steps {
               withKubeConfig ([credentialsId: 'kubeconfig']) {
                 script {
-                  sh('docker buildx create --name=$BUILDER --driver=kubernetes --bootstrap --use')
+                  sh('docker buildx create --name=$BUILDER --driver=kubernetes --bootstrap')
                   sh('echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin')
-                  sh('docker buildx build --build-context project=$REPOSITORY --tag $REGISTRY:build-$BUILD_NUMBER --push . ')
+                  sh('docker buildx build --builder $BUILDER --build-context project=$REPOSITORY --tag $REGISTRY:build-$BUILD_NUMBER --push . ')
                   sh('docker buildx stop $BUILDER')
                   sh('docker buildx rm $BUILDER')
                 }
