@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: demo-app
-        image: piky/demo-app:build-$BUILD_NUMBER
+        image: piky/demo-app
         ports:
         - containerPort: 3000
         livenessProbe:

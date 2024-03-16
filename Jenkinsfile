@@ -50,7 +50,7 @@ pipeline {
             steps {
               withKubeConfig ([credentialsId: 'kubeconfig']) {
                 script {
-                  sh('docker buildx create --bootstrap --name=$BUILDER --driver=kubernetes')
+                  sh('docker buildx create --name=$BUILDER --driver=kubernetes --bootstrap')
                   sh('echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin')
                   sh('docker buildx build --builder $BUILDER --build-context project=$REPOSITORY --tag $REGISTRY:build-$BUILD_NUMBER --push . ')
                   sh('docker buildx stop $BUILDER')
@@ -64,8 +64,9 @@ pipeline {
              steps {
                  withKubeConfig ([credentialsId: 'kubeconfig']) {
                      script {
+                         env()
                          sh('kubectl --namespace $NS apply -f k8s/service.yaml -f k8s/deployment.yaml -f k8s/ingress.yaml')
-                        //  sh('kubectl --namespace $NS set image deployment/$DEPLOYMENT $JOB_NAME=$REGISTRY:build-$env.BUILD_NUMBER')
+                         sh('kubectl --namespace $NS set image deployment/$DEPLOYMENT $JOB_NAME=$REGISTRY:build-$BUILD_NUMBER')
                          sleep(30)
                          sh('kubectl --namespace $NS get svc')
                          sh('kubectl --namespace $NS get pods')
