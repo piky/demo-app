@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: buildkitd
 spec:
-  serviceAccountName: jenkins
+  # serviceAccountName: jenkins
   containers:
     - name: buildkitd
       image: piky/buildkit
