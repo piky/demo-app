@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: nodejs
-      image: piky/jenkins-agent-node:latest
+      image: piky/jnlp-agent-nodejs:latest
       command:
         - cat
       tty: true
