@@ -11,7 +11,7 @@ pipeline {
     agent  {
         kubernetes {
             defaultContainer 'buildkitd'
-            yamlFile 'k8s/agent-buildkit.yaml'
+            yamlFile 'k8s/jenkins-agent-buildkit.yaml'
             retries 1
         }
     }
