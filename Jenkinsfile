@@ -9,8 +9,8 @@ pipeline {
     stage ('Provision agent pod') {
       agent {
         kubernetes {
-          defaultContainer 'buildkitd'
-          yamlFile 'k8s/agent-buildkit.yaml'
+          defaultContainer 'nodejs'
+          yamlFile 'k8s/jenkins-agent-node.yaml'
           retries 1
         }
       }
