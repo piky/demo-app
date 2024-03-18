@@ -15,7 +15,7 @@ pipeline {
     agent  {
         kubernetes {
             defaultContainer 'buildkitd'
-            yamlFile 'k8s/agent-buildkit.yaml'
+            yamlFile 'k8s/jenkins-agent-buildkit.yaml'
             retries 1
         }
     }
@@ -28,10 +28,8 @@ pipeline {
       }
       stage('Unit test') {
             steps {
-                sh('node --version')
-                sh('npm --version')
-                // sh 'npm install'
-                // sh 'npm run test:unit'
+                sh 'npm install'
+                sh 'npm run test:unit'
             }
       }
     
