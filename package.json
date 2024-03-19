@@ -48,8 +48,5 @@
   "nodemonConfig": {
     "verbose": true,
     "exitcrash": true
-    // "events": {
-    //   "exit": "kill -SIGTERM $(pgrep node)"
-    // }
   }
 }
