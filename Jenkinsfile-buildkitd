@@ -51,13 +51,6 @@ pipeline {
         }
 
         stage ('Deploy to Kubernetes') {
-        //     agent {
-        //         kubernetes {
-        //             defaultContainer 'kubectl'
-        //             yamlFile 'k8s/agent-kubectl.yaml'
-        //             retries 1
-        //         }
-        //     }
              steps {
                  withKubeConfig ([credentialsId: 'kubeconfig']) {
                      script {
