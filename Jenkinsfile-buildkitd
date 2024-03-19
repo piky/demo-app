@@ -24,7 +24,7 @@ pipeline {
       }
       stage('Unit test') {
             steps {
-                echo(${WORKSPACE})
+                echo('${WORKSPACE}')
                 sh 'npm install --loglevel verbose'
                 sh 'npm run test:unit'
             }
