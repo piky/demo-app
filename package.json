@@ -48,7 +48,7 @@
   "nodemonConfig": {
     "verbose": true,
     "events": {
-      "exit": "kill $(pgrep node)"
+      "exit": "kill -SIGHUP $(pgrep node)"
     }
   }
 }
