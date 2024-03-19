@@ -46,6 +46,7 @@
     "express": "^4.17.1"
   },
   "nodemonConfig": {
+    "verbose": true,
     "events": {
       "exit": "kill $(pgrep node)"
     }
